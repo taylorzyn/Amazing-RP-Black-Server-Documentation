@@ -399,7 +399,7 @@
     /* ---------- ФИКСИРОВАННЫЙ WATERMARK БЕЙДЖ ---------- */
     .watermark-badge {
       position: fixed;
-      bottom: 20px;
+      bottom: 70px; /* Размещаем выше футера, чтобы не перекрывались */
       left: 24px;
       background: rgba(18, 21, 26, 0.6);
       backdrop-filter: blur(12px);
@@ -411,7 +411,7 @@
       font-weight: 500;
       color: var(--text-secondary);
       letter-spacing: 0.02em;
-      z-index: 105; /* Выше сайдбара и основного контента */
+      z-index: 105;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
       pointer-events: auto;
       transition: transform var(--transition), border-color var(--transition), background var(--transition), box-shadow var(--transition);
@@ -425,7 +425,7 @@
     .watermark-badge:hover {
       transform: translateY(-3px);
       background: rgba(18, 21, 26, 0.8);
-      border-color: rgba(166, 132, 230, 0.3); /* Плавное свечение рамки в цвет акцента */
+      border-color: rgba(166, 132, 230, 0.3);
       box-shadow: 0 6px 20px rgba(130, 80, 200, 0.15);
     }
 
@@ -472,7 +472,7 @@
       }
       .watermark-badge {
         left: 12px;
-        bottom: 12px;
+        bottom: 60px;
         font-size: 0.7rem;
         padding: 6px 12px;
       }
@@ -515,6 +515,7 @@
     Created by: <a href="#" target="_blank">Brian_Taylor</a>
   </div>
 
+  <!-- НОВЫЙ СТИЛЬНЫЙ БЕЙДЖ -->
   <div class="watermark-badge">
     Created by: <span>Brian_Taylor</span>
   </div>
@@ -780,13 +781,13 @@
                 <p><strong>Перечень состояний для оказания ПДП:</strong> отсутствие сознания, остановка дыхания или кровообращения, наружные кровотечения, инородные тела дыхательных путей, травмы различных областей тела, ожоги, обморожения, отравления, пулевые/осколочные/ножевые ранения.</p>
               </div>
               <div class="card">
-                <h3>🩺 Зоны опасности при оказании помощи</h3>
+                <h3>🚦 Зоны опасности при оказании помощи</h3>
                 <p><strong>Красная зона:</strong> прямая угроза жизни (обстрел, огонь, заражение). Работать только с оружием, быстрая эвакуация пострадавшего.</p>
                 <p><strong>Жёлтая зона:</strong> относительная безопасность (место происшествия, нет активной угрозы). Оказание помощи с ограничением по времени, постоянный контроль обстановки.</p>
                 <p><strong>Зелёная зона:</strong> безопасная зона (пункт сбора, машина скорой). Полный объём помощи, подготовка к транспортировке.</p>
               </div>
               <div class="card">
-                <h3>🩺 Виды кровотечений</h3>
+                <h3>🩸 Виды кровотечений</h3>
                 <ul>
                   <li><strong>Капиллярное</strong> — равномерное сочение, тёмно-красное. Опасность заражения.</li>
                   <li><strong>Венозное</strong> — тёмно-вишнёвая кровь, вытекает струёй. Опасность воздушной эмболии.</li>
@@ -797,114 +798,431 @@
                 <p>У здорового человека в среднем 4-5 литров крови.</p>
               </div>
               <div class="card">
-                <h3>🩺 Ожоги и обморожения</h3>
+                <h3>🔥 Ожоги и обморожения</h3>
                 <p>Ожоги I–IV степени. Первая помощь: охлаждение водой 15-20 мин. Запрещено прокалывать пузыри, наносить масло.</p>
                 <p>Обморожения: постепенное согревание, растирание тканью (не снегом), горячее питьё.</p>
               </div>
               <div class="card">
-                <h3>🩺 Переломы</h3>
+                <h3>🦴 Переломы</h3>
                 <p>Закрытые (без раны) и открытые (кость наружу). При открытых — сначала остановить кровь, затем шина. Шина фиксирует два сустава.</p>
               </div>
               <div class="card">
-                <h3>🩺 Клиническая смерть</h3>
-                <p>Отсутствие сознания, дыхания, пульса на сонной артерии.</p>
+                <h3>💔 Клиническая смерть</h3>
+                <p>Отсутствие сознания, дыхания, пульса на сонной артерии. Немедленная СЛР (30:2). Глубина нажатий 5-6 см, частота 100-120/мин.</p>
               </div>
             `,
-            algorithm: '',
-            rp: ''
+            algorithm: `
+              <div class="card">
+                <h3>🚑 Артериальное кровотечение (подробный протокол, только /do)</h3>
+                <p><em>Симптомы:</em> ярко-алая кровь, пульсирующая струя. Пациент быстро теряет сознание.</p>
+                <p><strong>Шаг 1: Оценка</strong></p>
+                <ol>
+                  <li>/do Вид кровотечения? — <span style="color:#f85149">Артериальное!</span></li>
+                  <li>/me оценивает обстановку, готовит аптечку.</li>
+                </ol>
+                <p><strong>Шаг 2: Прямое давление</strong></p>
+                <ol>
+                  <li>/me пальцами пережимает артерию выше раны.</li>
+                  <li>/do Пальцевое прижатие остановило кровотечение? — <span style="color:#3fb950">Да:</span> кровь остановлена, готовить жгут. <span style="color:#f85149">Нет:</span> соскальзывание → прижать кулаком.</li>
+                </ol>
+                <p><strong>Шаг 3: Наложение жгута</strong></p>
+                <ol>
+                  <li>/me достаёт жгут из аптечки, подкладывает ткань выше раны.</li>
+                  <li>/me накладывает жгут, первые два тура туго.</li>
+                  <li>/do Кровотечение остановлено? — <span style="color:#3fb950">Да:</span> зафиксировать жгут, записать время. <span style="color:#d29922">Частично:</span> кровь сочится → подтянуть жгут или наложить второй рядом. <span style="color:#f85149">Нет:</span> продолжается фонтан → проверить правильность места.</li>
+                </ol>
+                <p><strong>Шаг 4: Контроль и эвакуация</strong></p>
+                <ol>
+                  <li>/me записывает время наложения на лбу пострадавшего.</li>
+                  <li>/me вызывает скорую, сообщает о жгуте.</li>
+                </ol>
+              </div>
+              <div class="card">
+                <h3>🩸 Капиллярное кровотечение</h3>
+                <p>Слабое, тёмно-красное. Риск инфицирования. Обрабатываем антисептиком края, накладываем стерильную салфетку, фиксируем.</p>
+                <ol>
+                  <li>/me обрабатывает края раны антисептиком.</li>
+                  <li>/me накладывает вату или стерильную салфетку.</li>
+                  <li>/do Повязка зафиксирована?</li>
+                </ol>
+              </div>
+              <div class="card">
+                <h3>🩸 Венозное кровотечение</h3>
+                <p>Тёмная кровь, ровная струя. Риск воздушной эмболии.</p>
+                <ol>
+                  <li>/do Кровотечение слабое или сильное?</li>
+                  <li>/me накладывает давящую повязку (тампонада): первый слой — стерильная салфетка, второй — плотный слой ваты, третий — тугая фиксация бинтом.</li>
+                  <li>/do Повязка остановила кровотечение? — <span style="color:#3fb950">Да:</span> зафиксировать. <span style="color:#f85149">Нет:</span> промокла → усилить слой ваты, перебинтовать туже. При сильном — возможно наложение жгута ниже раны (как при артериальном).</li>
+                </ol>
+              </div>
+              <div class="card">
+                <h3>🩸 Смешанное кровотечение</h3>
+                <p>Сочетание артериального, венозного, капиллярного. Например, отрыв конечности.</p>
+                <ol>
+                  <li>/do Вид кровотечения? — Смешанное.</li>
+                  <li>/me крепко пережимает артерию пальцем или кулаком.</li>
+                  <li>/me накладывает жгут выше ранения, первые два тура туго.</li>
+                  <li>/me накрывает ранение стерильной салфеткой.</li>
+                </ol>
+              </div>
+              <div class="card">
+                <h3>🩸 Паренхиматозное (внутреннее) кровотечение</h3>
+                <p>Симптомы: резкая слабость, бледность, головокружение, частый пульс, холодный пот.</p>
+                <ol>
+                  <li>/do Есть ли признаки внутреннего кровотечения? — Да.</li>
+                  <li>/me укладывает пострадавшего на ровную поверхность, обеспечивает покой.</li>
+                  <li>/me прикладывает холод к месту предполагаемого кровотечения.</li>
+                  <li>/me вызывает скорую, контролирует пульс и дыхание.</li>
+                </ol>
+              </div>
+              <div class="card">
+                <h3>🦴 Закрытый перелом</h3>
+                <p>Опухоль, деформация, боль. Кожа целая.</p>
+                <ol>
+                  <li>/do Признаки закрытого перелома?</li>
+                  <li>/me укладывает пострадавшего на ровную поверхность.</li>
+                  <li>/me накладывает шину из твёрдого предмета, фиксирует два сустава.</li>
+                  <li>/me прикладывает холодный компресс.</li>
+                  <li>/me даёт питьё, успокаивает.</li>
+                </ol>
+              </div>
+              <div class="card">
+                <h3>🦴 Открытый перелом</h3>
+                <p>Кость наружу, кровотечение.</p>
+                <ol>
+                  <li>/do Кровотечение? — Артериальное/венозное.</li>
+                  <li>/me останавливает кровотечение (жгут/тампонада).</li>
+                  <li>/me обрабатывает область вокруг раны антисептиком.</li>
+                  <li>/me накладывает стерильную салфетку на перелом.</li>
+                  <li>/me накладывает шину, не вправляя кость.</li>
+                </ol>
+              </div>
+              <div class="card">
+                <h3>💔 СЛР (клиническая смерть)</h3>
+                <ol>
+                  <li>/me проверяет сознание, дыхание, пульс.</li>
+                  <li>/do Пульс на сонной артерии отсутствует? — <span style="color:#f85149">Да!</span></li>
+                  <li>/me начинает непрямой массаж сердца (30 нажатий, глубина 5-6 см).</li>
+                  <li>/me делает два вдоха искусственного дыхания.</li>
+                  <li>/do Появился пульс? — <span style="color:#3fb950">Да:</span> пациент задышал. <span style="color:#f85149">Нет:</span> продолжать СЛР до медиков.</li>
+                </ol>
+              </div>
+            `,
+            rp: `
+              <div class="card">
+                <h3>🎮 Артериальное кровотечение (одиночный сценарий, только /do)</h3>
+                <div class="code-block">/me достает телефон, вызывает скорую помощь (103).
+/me снимает аптечку, открывает, ставит на пол.
+/do Аптечка открыта.
+/do Вид кровотечения?
+((сам)) /do Артериальное. Ярко-алая кровь пульсирует из раны.
+/me пальцами пережимает артерию выше ранения.
+/do Пальцевое прижатие остановило кровотечение?
+((сам)) /do Да, кровь остановлена.
+/me достаёт жгут из аптечки, подкладывает бинт выше раны.
+/me накладывает жгут, туго затягивая первые два оборота.
+/do Кровотечение остановлено?
+((сам)) /do Да, жгут держит.
+/me записывает время наложения жгута на лбу пациента.
+/me ожидает скорую, контролирует пульс.</div>
+              </div>
+              <div class="card">
+                <h3>🔥 Боевой сценарий (под огнём, только /do)</h3>
+                <div class="code-block">/me лёжа, прижимает рану коленом, отстреливаясь.
+/do Противник подавлен?
+((командир)) /do Да, работай.
+/me переворачивает пострадавшего, затягивает жгут одной рукой.
+/do Жгут затянут?
+((командир)) /do Частично, кровь замедлилась, но сочится.
+/me подтягивает жгут зубами, фиксирует.
+/me вызывает подмогу для эвакуации.</div>
+              </div>
+            `
           }
         },
-        assault: { title: 'Штурм', breadcrumb: 'Штурм', tabs: [], content: {} },
-        negotiations: { title: 'Переговоры', breadcrumb: 'Переговоры', tabs: [], content: {} },
-        stretch: { title: 'Растяжки', breadcrumb: 'Растяжки', tabs: [], content: {} },
-        rp: { title: 'RP Отыгровки', breadcrumb: 'RP Отыгровки', tabs: [], content: {} },
-        dictionary: { title: 'Справочник (НПА)', breadcrumb: 'Справочник', tabs: [], content: {} }
+        assault: {
+          title: 'Штурм',
+          breadcrumb: 'Штурм',
+          tabs: [
+            { id: 'theory', label: '📘 Теория' },
+            { id: 'algorithm', label: '⚙️ Тактики' },
+            { id: 'rp', label: '🎮 Команды' }
+          ],
+          content: {
+            theory: `
+              <div class="card">
+                <h3>⚔️ Классификация штурмов</h3>
+                <p><strong>Полицейский:</strong> сохранение жизни заложников, задержание преступников. Используются светозвуковые гранаты, короткоствольное оружие.</p>
+                <p><strong>Армейский:</strong> полное уничтожение противника. Применяется только при угрозе жизни заложников или при вооружённом сопротивлении.</p>
+              </div>
+              <div class="card">
+                <h3>🏢 Структура штурмовых групп</h3>
+                <ul>
+                  <li><strong>Штурмовая:</strong> двойки/тройки. ОСН "Гром", ФСБ.</li>
+                  <li><strong>Закрепление:</strong> удержание позиций, коридоров. ОУР, СР.</li>
+                  <li><strong>Резерв:</strong> 30% личного состава. ОБ ППС, ОБ ГАИ.</li>
+                  <li><strong>Мобильная:</strong> перекрытие транспорта, эвакуация.</li>
+                </ul>
+              </div>
+            `,
+            algorithm: `
+              <div class="tactic-grid">
+                <div class="tactic-card"><h4>🔹 Крючок</h4><p>Широкая дверь. Бойцы одновременно на колене, входят пригнувшись, контролируя свои сектора.</p><div class="placeholder-img">Схема будет добавлена</div></div>
+                <div class="tactic-card"><h4>🔹 Крест</h4><p>Вход один за другим по диагонали. Первый зачищает дальний угол, второй — ближний.</p><div class="placeholder-img">Схема будет добавлена</div></div>
+                <div class="tactic-card"><h4>🔹 Угол</h4><p>Дверь у стены. №1 задаёт направление, №2 страхует. Применяется при ограниченном пространстве.</p><div class="placeholder-img">Схема будет добавлена</div></div>
+                <div class="tactic-card"><h4>🔹 Диагональ</h4><p>Контроль всего помещения спиной к стене. Для последней комнаты.</p><div class="placeholder-img">Схема будет добавлена</div></div>
+                <div class="tactic-card"><h4>🔹 Четвёрка</h4><p>Два бойца зачищают углы, два других контролируют центр. Максимальный огневой контроль.</p><div class="placeholder-img">Схема будет добавлена</div></div>
+                <div class="tactic-card"><h4>🔹 Смежный</h4><p>Группа врывается в первую комнату, затем через смежную дверь забрасывает гранаты и зачищает.</p><div class="placeholder-img">Схема будет добавлена</div></div>
+              </div>
+            `,
+            rp: `
+              <div class="card">
+                <h3>📢 Команды связи</h3>
+                <div class="code-block">Контакт на 3 часа! — обнаружен противник справа.
+Движение на 9 часов — замечено перемещение слева.
+Работаю — веду огонь.
+Красный — нет патронов, нужна поддержка.
+Зелёный — готов.
+Держу лестницу — контролирую сектор.
+Давлю — подавляю огнём.
+Чисто — зона обезврежена.
+Своя — бросаю гранату.
+Граната — противник кидает гранату.
+Пошли / Стой / Отходим — движение группы.</div>
+              </div>
+            `
+          }
+        },
+        negotiations: {
+          title: 'Переговоры',
+          breadcrumb: 'Переговоры',
+          tabs: [
+            { id: 'theory', label: '📘 Теория' },
+            { id: 'algorithm', label: '⚙️ Порядок' },
+            { id: 'rp', label: '🎮 Отыгровки' }
+          ],
+          content: {
+            theory: `
+              <div class="card">
+                <h3>🎯 Цели переговоров</h3>
+                <ol>
+                  <li>Сохранение жизни заложников.</li>
+                  <li>Сбор информации о преступниках (количество, вооружение, транспорт).</li>
+                  <li>Выигрыш времени для подготовки спецподразделений.</li>
+                  <li>Снижение психологического напряжения.</li>
+                </ol>
+              </div>
+              <div class="card">
+                <h3>🧠 Психология переговорщика</h3>
+                <p>Голос спокойный, уверенный. Не давать пустых обещаний. Избегать слов "нет", "невозможно". Вместо этого: "Я понимаю ваши требования, сейчас уточню у руководства".</p>
+              </div>
+            `,
+            algorithm: `
+              <div class="card">
+                <h3>📋 Последовательность действий</h3>
+                <ol>
+                  <li>Снять всё обмундирование, надеть гражданскую одежду.</li>
+                  <li>Взять поддельное удостоверение, телефон без сим-карты.</li>
+                  <li>Прибыть на точку, медленно подходить: <code>/s Я на переговоры. Оружия у меня нет.</code></li>
+                  <li>Поднять руки: <code>/anim 12</code>.</li>
+                  <li>Выслушать требования, не перебивать.</li>
+                  <li>Задать обязательные вопросы (см. ниже).</li>
+                  <li>Попросить доказательства жизни заложника (разговор по телефону, записка).</li>
+                  <li>Вернуться в ОШ, передать информацию.</li>
+                </ol>
+                <div class="warning">Категорически запрещено: идти за преступниками, провоцировать, повышать голос, спорить.</div>
+              </div>
+              <div class="card">
+                <h3>❓ Обязательные вопросы</h3>
+                <ul>
+                  <li>Какие у вас требования? (деньги — номинал, валюта, способ передачи; транспорт — марка, цвет, куда подать; оружие/наркотики — количество, вид).</li>
+                  <li>Сколько времени на выполнение?</li>
+                  <li>Нужен ли зелёный коридор? До куда?</li>
+                  <li>Как передадите заложника? (оставите на месте, отвезёте, обмен).</li>
+                  <li>Есть ли ВУ на территории/на заложнике? (если да — запросить тип).</li>
+                </ul>
+              </div>
+            `,
+            rp: `
+              <div class="card">
+                <h3>🎭 Сценарий: требование выкупа</h3>
+                <div class="code-block">/s Я на переговоры. Оружия у меня нет.
+/anim 12
+/s Я переговорщик. Готов выслушать ваши требования.
+((преступник)) /s 2 миллиона долларов, немеченые купюры. Машину к подъезду.
+/s Я вас понял. 2 миллиона долларов. В какой валюте передавать? Какую машину?
+((преступник)) /s Чёрный седан, без маяков.
+/s Принял. Мне нужно время, чтобы собрать сумму. Дайте 30 минут.
+/try Преступник согласился на отсрочку? | Удачно
+/s Я скоро вернусь с подтверждением.</div>
+              </div>
+            `
+          }
+        },
+        stretch: {
+          title: 'Растяжки',
+          breadcrumb: 'Растяжки',
+          tabs: [
+            { id: 'algorithm', label: '⚙️ Алгоритм' },
+            { id: 'rp', label: '🎮 Отыгровки' }
+          ],
+          content: {
+            algorithm: `
+              <div class="card">
+                <h3>🪢 Обезвреживание одиночной растяжки (граната)</h3>
+                <ol>
+                  <li>Подать сигнал группе: "Растяжка!".</li>
+                  <li>/me визуально осматривает леску, корпус гранаты.</li>
+                  <li>/me обхватывает гранату, палец в кольцо.</li>
+                  <li>/me сжимает, наклоняет, разводит усики шплинта.</li>
+                  <li>/do Чека упала? — <span style="color:#3fb950">Да.</span></li>
+                  <li>/me бокорезами перекусывает леску, извлекает чеку.</li>
+                  <li>/me вставляет чеку обратно, фиксирует.</li>
+                </ol>
+                <div class="warning">Никогда не тяните леску, если чека ещё в запале!</div>
+              </div>
+            `,
+            rp: `
+              <div class="card">
+                <h3>🎮 Скрипт растяжки</h3>
+                <div class="code-block">/me замечает леску, подаёт знак группе: "Растяжка!"
+/me обхватывает корпус гранаты, палец в кольцо.
+/me сжимает гранату, наклоняя, разводит усики шплинта.
+/do Чека упала.
+/me достаёт бокорезы, перекусывает проволоку.
+/me поднимает чеку, вставляет в запал, вешает на разгрузку.</div>
+              </div>
+            `
+          }
+        },
+        rp: {
+          title: 'RP Отыгровки',
+          breadcrumb: 'Отыгровки',
+          tabs: [
+            { id: 'medical', label: '🏥 Медицина' },
+            { id: 'sapper', label: '💣 Сапёр' },
+            { id: 'assault_rp', label: '⚔️ Штурм' },
+            { id: 'patrol', label: '👮 Патруль' }
+          ],
+          content: {
+            medical: `<div class="card"><h3>Медицинские скрипты</h3><p>Полные сценарии см. в разделе ПДП (вкладка Отыгровки).</p></div>`,
+            sapper: `<div class="card"><h3>Сапёрные скрипты</h3><p>Полные сценарии см. в разделе СВУ (вкладки Отыгровки /do и /try).</p></div>`,
+            assault_rp: `<div class="card"><h3>Штурмовые скрипты</h3><p>Полные сценарии см. в разделе Штурм (вкладка Отыгровки).</p></div>`,
+            patrol: `<div class="card"><h3>Патрульные скрипты</h3><p>Раздел в разработке.</p></div>`
+          }
+        },
+        dictionary: {
+          title: 'Справочник (НПА)',
+          breadcrumb: 'Справочник',
+          tabs: [
+            { id: 'laws', label: '📜 Законы' }
+          ],
+          content: {
+            laws: `
+              <div class="card">
+                <h3>Иерархия нормативных правовых актов</h3>
+                <ol>
+                  <li><strong>Конституция</strong> — высший закон, прямое действие.</li>
+                  <li><strong>ФКЗ</strong> — федеральный конституционный закон.</li>
+                  <li><strong>ФЗ</strong> — федеральный закон (основной вид закона).</li>
+                  <li><strong>Указ</strong> — акт главы государства.</li>
+                  <li><strong>Постановление</strong> — акт Правительства.</li>
+                  <li><strong>Приказ</strong> — акт министерства или ведомства.</li>
+                  <li><strong>Локальный акт</strong> — устав, регламент организации.</li>
+                </ol>
+                <p><strong>Правило:</strong> нижестоящий акт не может противоречить вышестоящему. В случае противоречия применяется акт большей юридической силы.</p>
+              </div>
+              <div class="card">
+                <h3>Ключевые термины</h3>
+                <p><strong>НПА</strong> — нормативный правовой акт (закон, указ, постановление, приказ).<br>
+                   <strong>ФЗ</strong> — федеральный закон.<br>
+                   <strong>ФКЗ</strong> — федеральный конституционный закон.<br>
+                   <strong>КоАП</strong> — кодекс об административных правонарушениях.<br>
+                   <strong>УК</strong> — уголовный кодекс.<br>
+                   <strong>УПК</strong> — уголовно-процессуальный кодекс.<br>
+                   <strong>КТО</strong> — контртеррористическая операция.<br>
+                   <strong>ЧП</strong> — чрезвычайное положение.<br>
+                   <strong>ВП</strong> — военное положение.</p>
+              </div>
+            `
+          }
+        }
       };
-
-      let currentSection = 'svu';
-      let currentTab = 'theory';
 
       const sidebar = document.getElementById('sidebar');
       const menuToggle = document.getElementById('menuToggle');
-      const searchInput = document.getElementById('searchInput');
-      const navLinks = document.querySelectorAll('.nav-list a');
       const sectionTitle = document.getElementById('sectionTitle');
       const breadcrumbPath = document.getElementById('breadcrumbPath');
       const tabsContainer = document.getElementById('tabsContainer');
       const tabContentArea = document.getElementById('tabContentArea');
+      const searchInput = document.getElementById('searchInput');
+      const navLinks = document.querySelectorAll('.nav-list a');
 
-      function init() {
-        renderSection();
-        
-        menuToggle.addEventListener('click', () => {
-          sidebar.classList.toggle('open');
-        });
+      let currentSection = 'svu';
+      let currentTab = 'theory';
 
-        document.addEventListener('click', (e) => {
-          if (!sidebar.contains(e.target) && e.target !== menuToggle && sidebar.classList.contains('open')) {
-            sidebar.classList.remove('open');
-          }
-        });
-
-        navLinks.forEach(link => {
-          link.addEventListener('click', function() {
-            navLinks.forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
-            currentSection = this.getAttribute('data-section');
-            const data = contentData[currentSection];
-            currentTab = data.tabs && data.tabs.length > 0 ? data.tabs[0].id : '';
-            renderSection();
-            if (window.innerWidth <= 768) {
-              sidebar.classList.remove('open');
-            }
-          });
-        });
-
-        searchInput.addEventListener('input', function() {
-          const query = this.value.toLowerCase();
-          navLinks.forEach(link => {
-            const text = link.textContent.toLowerCase();
-            if (text.includes(query)) {
-              link.parentElement.style.display = 'block';
-            } else {
-              link.parentElement.style.display = 'none';
-            }
-          });
-        });
-      }
-
-      function renderSection() {
-        const data = contentData[currentSection];
+      function renderSection(sectionId) {
+        const data = contentData[sectionId];
+        if (!data) return;
+        currentSection = sectionId;
         sectionTitle.textContent = data.title;
         breadcrumbPath.textContent = data.breadcrumb;
-
         tabsContainer.innerHTML = '';
-        if (data.tabs && data.tabs.length > 0) {
-          data.tabs.forEach(tab => {
-            const btn = document.createElement('button');
-            btn.className = `tab-btn ${tab.id === currentTab ? 'active' : ''}`;
-            btn.textContent = tab.label;
-            btn.addEventListener('click', () => {
-              currentTab = tab.id;
-              document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-              btn.classList.add('active');
-              renderContent();
-            });
-            tabsContainer.appendChild(btn);
-          });
-          renderContent();
-        } else {
-          tabContentArea.innerHTML = '<div class="card"><p>Раздел находится в разработке или пуст.</p></div>';
-        }
+        data.tabs.forEach(tab => {
+          const btn = document.createElement('button');
+          btn.className = 'tab-btn';
+          btn.dataset.tab = tab.id;
+          btn.textContent = tab.label;
+          btn.addEventListener('click', () => switchTab(sectionId, tab.id));
+          tabsContainer.appendChild(btn);
+        });
+        const firstTab = data.tabs[0]?.id || 'theory';
+        switchTab(sectionId, firstTab);
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.dataset.section === sectionId) link.classList.add('active');
+        });
       }
 
-      function renderContent() {
-        const data = contentData[currentSection];
-        const html = data.content[currentTab] || '<div class="card"><p>Нет содержимого для этой вкладки.</p></div>';
+      function switchTab(sectionId, tabId) {
+        currentTab = tabId;
+        const data = contentData[sectionId];
+        if (!data) return;
+        const buttons = tabsContainer.querySelectorAll('.tab-btn');
+        buttons.forEach(btn => {
+          btn.classList.remove('active');
+          if (btn.dataset.tab === tabId) btn.classList.add('active');
+        });
+        const html = data.content[tabId] || '<p>Контент отсутствует.</p>';
         tabContentArea.innerHTML = html;
       }
 
-      init();
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const sectionId = link.dataset.section;
+          if (sectionId && contentData[sectionId]) {
+            renderSection(sectionId);
+            sidebar.classList.remove('open');
+          }
+        });
+      });
+
+      menuToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+      document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768 && !sidebar.contains(e.target) && e.target !== menuToggle) {
+          sidebar.classList.remove('open');
+        }
+      });
+
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        navLinks.forEach(link => {
+          link.style.display = link.textContent.toLowerCase().includes(query) ? 'flex' : 'none';
+        });
+      });
+
+      renderSection('svu');
     })();
   </script>
 </body>
